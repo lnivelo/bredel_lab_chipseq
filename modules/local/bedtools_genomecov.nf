@@ -23,13 +23,13 @@ process BEDTOOLS_GENOMECOV {
     def prefix = task.ext.prefix ?: "${meta.id}"
     def pe     = meta.single_end ? '' : '-pc'
     """
-    SCALE_FACTOR=\$(grep '[0-9] mapped (' $flagstat | awk '{print 1000000/\$1}')
+    SCALE_FACTOR=\$(grep '[0-9] mapped (' $flagstat | awk '{print 20000000/\$1}')
     echo \$SCALE_FACTOR > ${prefix}.scale_factor.txt
 
     bedtools \\
         genomecov \\
         -ibam $bam \\
-        -bg \\
+        -bga \\
         -scale \$SCALE_FACTOR \\
         $pe \\
         $args \\
